@@ -15,18 +15,63 @@
                 </div>
                 <div class="col-sm-4">
                     <div>
-                        <ng-select [items]="rooms" [maxSelectedItems]="maxSelectedRooms" searchable="true" bindLabel="title" placeholder="Select a room"
-                            appendTo="body" multiple="true" [(ngModel)]="selectedRooms" #room="ngModel" name="room"
+                        <ng-select [items]="rooms" [maxSelectedItems]="maxSelectedRooms" searchable="true"
+                            bindLabel="title" placeholder="Select a room" appendTo="body" multiple="true"
+                            [(ngModel)]="selectedRooms" #room="ngModel" name="room" (change)="onChange($event)"
                             required>
                         </ng-select>
                     </div>
-                    
+
                 </div>
                 <div id="room-selection-error" class="col-sm-4 md-alert-banner md-alert-banner--info"
                     *ngIf="selectedRooms.length===maxSelectedRooms">
                     <div class="md-alert-banner__text">Maximum of 5 rooms are only allowed</div>
                 </div>
 
+            </div>
+        </div>
+        <div class="container">
+            <div *ngIf="selectedRooms?.length > 0">
+                <div id="room-information-header" class="md-panel__title">
+                    <h4>Room Information</h4>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="md-label" id="room-id-lbl" for="roomId"><span>Room ID </span> </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" id="roomId" class="md-input custom-input" name="roomId"
+                            [(ngModel)]="roomInfo.id" readonly #roomId="ngModel">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="md-label" id="room-title" for="roomTitle"><span>Room Title </span> </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" id="roomTitle" class="md-input custom-input" name="roomTitle"
+                            [(ngModel)]="roomInfo.title" readonly #roomTitle="ngModel">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="md-label" id="created-lbl" for="created"><span>Created Time </span> </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" id="created" class="md-input custom-input" name="created"
+                            [(ngModel)]="roomInfo.created" readonly #created="ngModel">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="md-label" id="last-activity-lbl" for="hostName"><span>Last Activity </span>
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" id="lastActivity" class="md-input custom-input" name="lastActivity"
+                            [(ngModel)]="roomInfo.lastActivity" readonly #lastActivity="ngModel">
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">

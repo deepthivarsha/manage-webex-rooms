@@ -21,13 +21,19 @@ export class AddMembersComponent implements OnInit {
   errorCount: number;
   addLoader: boolean;
   maxSelectedRooms:number = 5;
-
+  roomInfo = [{title:'',id:'',created:'',lastActivity:''}];
+  selectedRoomsClone:any[]=[];
+  
   constructor(private webex: WebexService) { }
 
   ngOnInit(): void {
-    if (this.webex.webex != undefined) {
-      console.log(this.webex.currentRoom);
+    if (this.webex.webex !== undefined) {
+      if(this.webex.currentRoom !== undefined) {
+      console.log("created room:"+this.webex.currentRoom);
       this.selectedRooms.push(this.webex.currentRoom);
+      this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
+      this.roomInfo = this.selectedRoomsClone.pop();
+      }
     }
     else {
       this.webex.onInit();
@@ -59,7 +65,6 @@ export class AddMembersComponent implements OnInit {
     //deep clone
     this.addEmails = JSON.parse(JSON.stringify(this.emails));
     this.addEmails.push({ email: this.emailId });
-    console.log("emails:" + JSON.stringify(this.addEmails));
     let addMemberEmails = []
     this.addEmails.forEach((email) => {
       addMemberEmails.push(email.email);
@@ -94,7 +99,7 @@ export class AddMembersComponent implements OnInit {
         errors.push(invalidResult + '<br>');
       })
       if (invalidResults.length === totalOperationsCount) {
-        this.dialogMessage = "Unable to add the members. Reasons for failure: <br>" + errors;
+        this.dialogMessage = "Unable to add the member(s). Reasons for failure: <br>" + errors;
       }
       if (invalidResults.length < totalOperationsCount) {
         this.dialogMessage = "Few of the members were not able to be added to the requested room(s).<br> The following actions failed: <br>" + errors;
@@ -108,6 +113,9 @@ export class AddMembersComponent implements OnInit {
   }
 
   onChange(e) {
-    console.info(e.value);
+    if(this.selectedRooms.length){
+    this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
+    this.roomInfo = this.selectedRoomsClone.pop();
+    }
   }
 }

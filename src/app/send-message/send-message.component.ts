@@ -14,14 +14,20 @@ export class SendMessageComponent implements OnInit {
   dialogMessage: string;
   message: string;
   addLoader: boolean;
-  maxSelectedRooms:number = 5;
+  maxSelectedRooms: number = 5;
+  roomInfo = [{ title: '', id: '', created: '', lastActivity: '' }];
+  selectedRoomsClone: any[] = [];
 
   constructor(private webex: WebexService) { }
 
   ngOnInit(): void {
     if (this.webex.webex != undefined) {
-      console.log(this.webex.currentRoom);
-      this.selectedRooms.push(this.webex.currentRoom);
+      if (this.webex.currentRoom !== undefined) {
+        console.log(this.webex.currentRoom);
+        this.selectedRooms.push(this.webex.currentRoom);
+        this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
+        this.roomInfo = this.selectedRoomsClone.pop();
+      }
     }
     else {
       this.webex.onInit();
@@ -31,7 +37,6 @@ export class SendMessageComponent implements OnInit {
 
   listRooms() {
     this.webex.onListRoom().then((rooms) => {
-      console.log(JSON.stringify(rooms.items))
       this.rooms = rooms.items.filter(room => room.type == 'group');
     })
   }
@@ -42,13 +47,12 @@ export class SendMessageComponent implements OnInit {
     this.selectedRooms.forEach((room) => {
       roomIds.push({ roomId: room.id, roomTitle: room.title });
     });
-    console.log("room ids:" + roomIds);
+
     let promises: any[] = [];
     roomIds.forEach((room) => {
       const promise =
         this.webex.onSendMessage(this.message, room.roomId, room.roomTitle)
       promises.push(promise);
-      console.log("promises:" + JSON.stringify(promises));
     })
     const results = await Promise.all(promises.map(p => p.catch(e => e)));
     const validResults = results.filter(result => !(result instanceof Error));
@@ -74,5 +78,12 @@ export class SendMessageComponent implements OnInit {
   okDialogAction() {
     this.addLoader = false;
     this.showAlertMessage = false;
+  }
+
+  onChange(e) {
+    if (this.selectedRooms.length) {
+      this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
+      this.roomInfo = this.selectedRoomsClone.pop();
+    }
   }
 }
