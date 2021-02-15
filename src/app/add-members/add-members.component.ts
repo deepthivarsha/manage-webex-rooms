@@ -20,6 +20,7 @@ export class AddMembersComponent implements OnInit {
   dialogMessage: string;
   errorCount: number;
   addLoader: boolean;
+  maxSelectedRooms:number = 5;
 
   constructor(private webex: WebexService) { }
 

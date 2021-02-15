@@ -14,6 +14,7 @@ export class SendMessageComponent implements OnInit {
   dialogMessage: string;
   message: string;
   addLoader: boolean;
+  maxSelectedRooms:number = 5;
 
   constructor(private webex: WebexService) { }
 

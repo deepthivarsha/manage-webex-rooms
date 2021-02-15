@@ -14,13 +14,17 @@
                     <label id="connector-lbl" for="company"><span>Select the room(s)</span> </label>
                 </div>
                 <div class="col-sm-4">
-
                     <div>
-                        <ng-select [items]="rooms" searchable="true" bindLabel="title" placeholder="Select a room"
+                        <ng-select [items]="rooms" [maxSelectedItems]="maxSelectedRooms" searchable="true" bindLabel="title" placeholder="Select a room"
                             appendTo="body" multiple="true" [(ngModel)]="selectedRooms" #room="ngModel" name="room"
                             required>
                         </ng-select>
                     </div>
+                    
+                </div>
+                <div id="room-selection-error" class="col-sm-4 md-alert-banner md-alert-banner--info"
+                    *ngIf="selectedRooms.length===maxSelectedRooms">
+                    <div class="md-alert-banner__text">Maximum of 5 rooms are only allowed</div>
                 </div>
 
             </div>
