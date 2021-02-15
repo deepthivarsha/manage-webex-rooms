@@ -1,0 +1,33 @@
+<div *ngIf="showSidebar"
+  class="md-sidebar md-sidebar--dark md-sidebar md-sidebar--global md-sidebar--indented md-sidebar--nested md-sidebar--expanded">
+  <div class="md-sidebar__body">
+    <div class="md-sidebar-nav">
+      <div class="md-list md-list--vertical md-sidebar-nav__group md-sidebar-nav__group--primary" role="list">
+        <a class="md-brand" routerLink="/roomcontrol">
+          <div class="md-brand__logo">
+            <i class="md-icon icon icon-cisco-logo"></i>
+          </div>
+          <div class="md-brand__title">Manage Rooms</div>
+        </a>
+        <a class="md-list-item" id="md-sidebar__nav-item-1-9" role="listitem"
+          data-md-event-key="md-sidebar__nav-item-1-9" routerLink="/roomcontrol">
+          <div class="md-list-item__left"> <i class="md-icon icon icon-activities_16"></i> </div>
+          <div class="md-list-item__center">Create Room</div>
+        </a>
+        <a class="md-list-item" id="md-sidebar__nav-item-1-9" role="listitem"
+          data-md-event-key="md-sidebar__nav-item-1-9" routerLink="/addmembers">
+          <div class="md-list-item__left"> <i class="md-icon icon icon-generic-device_16"></i> </div>
+          <div class="md-list-item__center">Add Members</div>
+        </a>
+        <a class="md-list-item" id="md-sidebar__nav-item-1-9" role="listitem"
+          data-md-event-key="md-sidebar__nav-item-1-9" routerLink="/sendmessage">
+          <div class="md-list-item__left"> <i class="md-icon icon icon-audio-call_16"></i> </div>
+          <div class="md-list-item__center">Send Message</div>
+        </a>
+        <a id="logout-btn" (click)=logout()>Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+<app-dialog *ngIf="showAlertMessage" [showOk]="true" [showCancel]="true" [modalMessage]="dialogMessage"
+  (okDialogEvent)="okDialogAction()" (cancelDialogEvent)="cancelDialogAction()"></app-dialog>

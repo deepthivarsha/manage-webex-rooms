@@ -1,0 +1,37 @@
+<div>
+  <h1>Create Room</h1>
+</div>
+<hr>
+<div [formGroup]="createRoom">
+  <div class="momentum md">
+    <div id="create-room-header" class="md-panel__title">
+      <h4>Create a new room</h4>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3">
+          <label id="connector-lbl" for="company"><span>Name of the new room</span> </label>
+        </div>
+        <div class="col-sm-4">
+          <span class="reqd">*</span>&nbsp;
+          <input class="md-input input" type="text" formControlName="newRoomName" autocomplete="off"
+            placeholder="Enter the room name" [(ngModel)]="roomName" />
+        </div>
+        <div class="col-sm-4"
+          *ngIf="createRoom.controls.newRoomName.invalid && (createRoom.controls.newRoomName.dirty || createRoom.controls.newRoomName.touched)">
+          <div id="room-name-error" class="md-alert-banner md-alert-banner--error"
+            *ngIf="createRoom.controls.newRoomName.errors.required">* Please enter the room name</div>
+        </div>
+      </div><br>
+      <div class="row">
+        <button class="md-button md-button--36 md-button--blue" (click)="onCreateRoom()"
+          [disabled]="createRoom.controls.newRoomName.invalid">Create Room</button>
+      </div>
+      <div *ngIf="addLoader" id="add_loading">
+        <i id="add_loading_image" class="md-spinner md-spinner--56 md-spinner--blue"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<app-dialog *ngIf="showAlertMessage" [showOk]="true" [showCancel]="isCancelEnabled" [modalMessage]="dialogMessage"
+  (okDialogEvent)="okDialogAction()" (cancelDialogEvent)="cancelDialogAction()"></app-dialog>

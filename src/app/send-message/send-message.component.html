@@ -1,0 +1,52 @@
+<div>
+    <h1>Send Message</h1>
+</div>
+<hr>
+<form #sendMessage="ngForm" class="">
+    <div class="momentum md">
+        <div id="create-room-header" class="md-panel__title">
+            <h4>Send Message</h4>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label id="connector-lbl" for="company"><span>Select the room(s)</span> </label>
+                </div>
+                <div class="col-sm-4">
+
+                    <div>
+                        <ng-select [items]="rooms" searchable="true" bindLabel="title" placeholder="Select a room"
+                            appendTo="body" multiple="true" [(ngModel)]="selectedRooms" #room="ngModel" name="room"
+                            required>
+                        </ng-select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label id="connector-lbl" for="company"><span>Text message</span> </label>
+                </div>
+                <div class="col-sm-8">
+                    <input type="text" id="textMsg" class="md-input input" name="textMsg" required [(ngModel)]="message"
+                        #textMsg="ngModel" placeholder="Enter the message">
+                    <span class="reqd">*</span>&nbsp;
+                </div>
+                <div id="text-message-error" class="col-sm-4"
+                    *ngIf="sendMessage.controls.textMsg.invalid && (sendMessage.controls.textMsg.dirty || sendMessage.controls.textMsg.touched)">
+                    <div class="md-alert-banner md-alert-banner--error"
+                        *ngIf="sendMessage.controls.textMsg.errors.required">* Please enter the message</div>
+                </div>
+            </div>
+            <div class="row">
+                <button class="md-button md-button--36 md-button--blue" (click)="sendMessageToSelectedRooms()"
+                    [disabled]="sendMessage.invalid">Send Message</button>
+            </div>
+            <div *ngIf="addLoader" id="add_loading">
+                <i id="add_loading_image" class="md-spinner md-spinner--56 md-spinner--blue"></i>
+            </div>
+        </div>
+    </div>
+</form>
+<app-dialog *ngIf="showAlertMessage" [showOk]="true" [showCancel]="false" [modalMessage]="dialogMessage"
+    (okDialogEvent)="okDialogAction()"></app-dialog>
