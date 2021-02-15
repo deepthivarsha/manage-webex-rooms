@@ -15,7 +15,7 @@ export class SendMessageComponent implements OnInit {
   message: string;
   addLoader: boolean;
   maxSelectedRooms: number = 5;
-  roomInfo = [{ title: '', id: '', created: '', lastActivity: '' }];
+  roomInfo = { title: '', id: '', created: '', lastActivity: '' };
   selectedRoomsClone: any[] = [];
 
   constructor(private webex: WebexService) { }

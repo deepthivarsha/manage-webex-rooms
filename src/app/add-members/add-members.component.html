@@ -111,5 +111,5 @@
         </div>
     </div>
 </form>
-<app-dialog *ngIf="showAlertMessage" [showOk]="true" [showCancel]="false" [modalMessage]="dialogMessage"
+<app-dialog *ngIf="showAlertMessage" [showDialogSpinner]="dialogMessageLoader" [showOk]="showOk" [showCancel]="false" [modalMessage]="dialogMessage"
     (okDialogEvent)="okDialogAction()"></app-dialog>

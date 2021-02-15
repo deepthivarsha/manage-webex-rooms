@@ -10,6 +10,7 @@ export class DialogComponent implements OnInit {
   @Input() modalTitle;
   @Input() showOk;
   @Input() showCancel;
+  @Input() showDialogSpinner;
   @Output() okDialogEvent = new EventEmitter<boolean>();
   @Output() cancelDialogEvent = new EventEmitter<boolean>();
   constructor() { }

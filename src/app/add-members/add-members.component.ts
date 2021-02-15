@@ -18,21 +18,23 @@ export class AddMembersComponent implements OnInit {
   firstEmailAdd: boolean;
   showAlertMessage: boolean;
   dialogMessage: string;
+  showOk: boolean;
   errorCount: number;
   addLoader: boolean;
-  maxSelectedRooms:number = 5;
-  roomInfo = [{title:'',id:'',created:'',lastActivity:''}];
-  selectedRoomsClone:any[]=[];
-  
+  dialogMessageLoader: boolean;
+  maxSelectedRooms: number = 5;
+  roomInfo = { title: '', id: '', created: '', lastActivity: '' };
+  selectedRoomsClone: any[] = [];
+
   constructor(private webex: WebexService) { }
 
   ngOnInit(): void {
     if (this.webex.webex !== undefined) {
-      if(this.webex.currentRoom !== undefined) {
-      console.log("created room:"+this.webex.currentRoom);
-      this.selectedRooms.push(this.webex.currentRoom);
-      this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
-      this.roomInfo = this.selectedRoomsClone.pop();
+      if (this.webex.currentRoom !== undefined) {
+        console.log("created room:" + this.webex.currentRoom);
+        this.selectedRooms.push(this.webex.currentRoom);
+        this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
+        this.roomInfo = this.selectedRoomsClone.pop();
       }
     }
     else {
@@ -42,7 +44,12 @@ export class AddMembersComponent implements OnInit {
   }
 
   listRooms() {
+    this.showAlertMessage = true;
+    this.dialogMessageLoader = true;
+    this.dialogMessage = 'Loading rooms... please wait!'
     this.webex.onListRoom().then((rooms) => {
+      this.showAlertMessage = false;
+      this.dialogMessageLoader = false;
       console.log(JSON.stringify(rooms.items))
       this.rooms = rooms.items.filter(room => room.type == 'group');
     })
@@ -90,6 +97,7 @@ export class AddMembersComponent implements OnInit {
     const validResults = results.filter(result => !(result instanceof Error));
     const invalidResults = results.filter(result => (result instanceof Error));
     this.showAlertMessage = true;
+    this.showOk = true;
     if (validResults.length === totalOperationsCount) {
       this.dialogMessage = "Members added successfully to the selected room(s)";
     }
@@ -110,12 +118,13 @@ export class AddMembersComponent implements OnInit {
   okDialogAction() {
     this.addLoader = false;
     this.showAlertMessage = false;
+    this.showOk = false;
   }
 
   onChange(e) {
-    if(this.selectedRooms.length){
-    this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
-    this.roomInfo = this.selectedRoomsClone.pop();
+    if (this.selectedRooms.length) {
+      this.selectedRoomsClone = JSON.parse(JSON.stringify(this.selectedRooms));
+      this.roomInfo = this.selectedRoomsClone.pop();
     }
   }
 }
