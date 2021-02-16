@@ -16,7 +16,7 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, './coverage/ng-webex'),
+      dir: require('path').join(__dirname, './coverage/manage-webex-rooms'),
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
@@ -25,7 +25,19 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['ChromiumHeadlessNoSandbox'],
+    customLaunchers: {
+      'ChromiumHeadlessNoSandbox': {
+        base: 'Chromium',
+        flags: [
+          '--no-sandbox',
+          '--headless',
+          '--disable-gpu',
+          '--no-proxy-server',
+          '--remote-debugging-port=9222'
+        ]
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });

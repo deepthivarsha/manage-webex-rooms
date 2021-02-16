@@ -10,7 +10,7 @@ import { WebexService } from './services/webex.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-webex';
+  title = 'manage-webex-rooms';
   // session idle check
   constructor(private bnIdle: BnNgIdleService, private route: Router, private webex: WebexService) {
     this.bnIdle.startWatching(environment.TIMEOUT).subscribe((res) => {

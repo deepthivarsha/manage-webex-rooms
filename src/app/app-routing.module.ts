@@ -27,7 +27,8 @@ const routes: Routes = [
     path: 'sendmessage',
     component: SendMessageComponent,
     canActivate: [MyGuard]
-  }
+  },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
