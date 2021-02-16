@@ -13,9 +13,9 @@ Login page:
 Auth component: 
 
 - Has a login button and a title “Manage your Webex Rooms”
-- On clicking login button it gets the webex access token set in the localStorage 
+- On clicking login button it gets the webex access token set in the localStorage on successful login
 - Auth Guard is set for all the components, room creation , adding members and sending messages pages can be seen only when the webex token is set in local storage. 
-- During first time login, you may have to press the login button on the login page again after the successful login, if the token has not been set in the local storage by then. (open issue, need to find a solution when I get time)
+- During first time login, you may have to press the login button on the login page again after the successful login, if the token has not been set in the local storage by then. (open issue, need to find a solution when I get time). This is because of the Auth Guard that is set for the /roomcontrol component.
 - During first time login once you press the login button again on the login page after successful login, it takes you to the room creation page, the redirect uri (https://deepthivarsha.github.io/manage-webex-rooms/roomcontrol)
 
 Sidebar component:
@@ -26,7 +26,7 @@ Sidebar component:
 Room Creation Component:
 
 - This component contains an input field to accept the new room’s name. The field is mandatory.
-Input validation is done to check the field for input (required) and momentum error alert banner is used to display the error messages.
+Input validation is done to check the field for input (required) and momentum error alert banner is used to display the validation error messages.
 - The Create Room button is enabled only when the user has entered the room name in the text box.
 - On clicking the Create Room button, a dialog box appears (momentum-ui md-modal) showing the success or failure message.
 - On successful room creation, the dialog box prompts the user if he wants to add members to the created room. Then the user is navigated to the “Add Members” page on clicking ok. The “Add members” page has a select field to select the rooms from and the user could see that the created room gets automatically selected in the select field for adding members.
