@@ -33,14 +33,14 @@ Room Creation Component:
 
 Add Members Component:
 
-•	This component has a select field (ng-select) to list the rooms the logged in user belongs to. This is a multi-select field with maximum selection of 5 rooms. 
+•	This component has a select field (ng-select) to list the rooms the logged in user belongs to. 1:1 spaces are not listed here. Only rooms of type "group" are added, so that the user can add members to the rooms. This is a multi-select field with maximum selection of 5 rooms. The select field is searchable.
 •	When the user has selected 5 rooms, a momentum ui alert banner info appears saying that the max allowed rooms is “5”.
 •	This page displays the room information of the last selected room. Brought in this feature so that users will be able to select the correct room based on the displayed room id of the selected room (as there are possibilities for 2 rooms to share the same room title).
 •	The page allows to add members by email id. The users can add any number of persons by providing their mail ids using Add more option.
 •	The fields are being validated for email inputs. When an invalid email format of text is being input, the page displays an error alert banner asking the user to enter valid email.
 •	The Add members button is enabled only when the form is valid with proper inputs.
 •	 On clicking the add members button, a load spinner appears asking the user to wait till we add members.
-•	Once the operations are done, the modal displays the results of the member addition. It displays the reason why few members were not able to be added on unsuccessful operations.
+•	Once the operations are done, the modal displays the results of the member addition. It displays the reason why few members were not able to be added on unsuccessful operations. 
 
 Send Message Component:
 •	This component has the same select field to display the list of rooms and also the room information to display the last selected room’s details.
