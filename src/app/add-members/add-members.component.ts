@@ -20,7 +20,6 @@ export class AddMembersComponent implements OnInit {
   dialogMessage: string;
   showOk: boolean;
   errorCount: number;
-  addLoader: boolean;
   dialogMessageLoader: boolean;
   maxSelectedRooms: number = 5;
   roomInfo = { title: '', id: '', created: '', lastActivity: '' };
@@ -68,7 +67,9 @@ export class AddMembersComponent implements OnInit {
     this.emails = [];
   }
   async addMembersToSelectedRooms() {
-    this.addLoader = true;
+    this.showAlertMessage = true;
+    this.dialogMessage = 'Adding Member(s) to the selected room(s)... Please wait!';
+    this.dialogMessageLoader = true;
     //deep clone
     this.addEmails = JSON.parse(JSON.stringify(this.emails));
     this.addEmails.push({ email: this.emailId });
@@ -81,7 +82,7 @@ export class AddMembersComponent implements OnInit {
     this.selectedRooms.forEach((room) => {
       roomIds.push({ roomId: room.id, roomTitle: room.title });
     });
-
+    // add members - fetch promises
     let promises: any[] = [];
     const totalOperationsCount = roomIds.length * addMemberEmails.length;
     roomIds.forEach((room) => {
@@ -93,11 +94,12 @@ export class AddMembersComponent implements OnInit {
       })
     })
 
+    // to display the results of adding members based on the promises received
     const results = await Promise.all(promises.map(p => p.catch(e => e)));
     const validResults = results.filter(result => !(result instanceof Error));
     const invalidResults = results.filter(result => (result instanceof Error));
-    this.showAlertMessage = true;
     this.showOk = true;
+    this.dialogMessageLoader = false;
     if (validResults.length === totalOperationsCount) {
       this.dialogMessage = "Members added successfully to the selected room(s)";
     }
@@ -116,7 +118,7 @@ export class AddMembersComponent implements OnInit {
   }
 
   okDialogAction() {
-    this.addLoader = false;
+    this.dialogMessageLoader = false;
     this.showAlertMessage = false;
     this.showOk = false;
   }

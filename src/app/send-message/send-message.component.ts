@@ -14,6 +14,8 @@ export class SendMessageComponent implements OnInit {
   dialogMessage: string;
   message: string;
   addLoader: boolean;
+  dialogMessageLoader: boolean;
+  showOk: boolean;
   maxSelectedRooms: number = 5;
   roomInfo = { title: '', id: '', created: '', lastActivity: '' };
   selectedRoomsClone: any[] = [];
@@ -42,22 +44,28 @@ export class SendMessageComponent implements OnInit {
   }
 
   async sendMessageToSelectedRooms() {
-    this.addLoader = true;
+    this.showAlertMessage = true;
+    this.dialogMessageLoader = true;
+    this.dialogMessage = 'Sending message to the selected room(s)... Please wait!';
     let roomIds = [];
     this.selectedRooms.forEach((room) => {
       roomIds.push({ roomId: room.id, roomTitle: room.title });
     });
 
+    // send message - fetch promises
     let promises: any[] = [];
     roomIds.forEach((room) => {
       const promise =
         this.webex.onSendMessage(this.message, room.roomId, room.roomTitle)
       promises.push(promise);
     })
+
+    // to display the results of sending messages based on the promises received
     const results = await Promise.all(promises.map(p => p.catch(e => e)));
     const validResults = results.filter(result => !(result instanceof Error));
     const invalidResults = results.filter(result => (result instanceof Error));
-    this.showAlertMessage = true;
+    this.showOk = true;
+    this.dialogMessageLoader = false;
     if (validResults.length === roomIds.length) {
       this.dialogMessage = "Message sent successfully to the selected room(s)";
     }
@@ -76,8 +84,9 @@ export class SendMessageComponent implements OnInit {
   }
 
   okDialogAction() {
-    this.addLoader = false;
+    this.dialogMessageLoader = false;
     this.showAlertMessage = false;
+    this.showOk = false;
   }
 
   onChange(e) {

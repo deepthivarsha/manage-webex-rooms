@@ -90,11 +90,8 @@
                 <button class="md-button md-button--36 md-button--blue" (click)="sendMessageToSelectedRooms()"
                     [disabled]="sendMessage.invalid">Send Message</button>
             </div>
-            <div *ngIf="addLoader" id="add_loading">
-                <i id="add_loading_image" class="md-spinner md-spinner--56 md-spinner--blue"></i>
-            </div>
         </div>
     </div>
 </form>
-<app-dialog *ngIf="showAlertMessage" [showOk]="true" [showCancel]="false" [modalMessage]="dialogMessage"
+<app-dialog *ngIf="showAlertMessage" [showDialogSpinner]="dialogMessageLoader" [showOk]="showOk" [showCancel]="false" [modalMessage]="dialogMessage"
     (okDialogEvent)="okDialogAction()"></app-dialog>
