@@ -10,6 +10,8 @@ export class SidebarComponent implements OnInit {
   showSidebar: boolean;
   showAlertMessage:boolean;
   dialogMessage:string;
+  loggedInUser;
+  userName:string;
   constructor(private webex: WebexService) {
     var myContextWithPath = window.location.pathname;
     if (myContextWithPath === '/' || myContextWithPath === '') {
@@ -24,6 +26,12 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.webex.webex === undefined) {
+      this.webex.onInit();
+    }
+    this.webex.getMyOwnDetails().then((data)=>{
+      this.userName = data.displayName;
+    })
   }
 
   logout() {

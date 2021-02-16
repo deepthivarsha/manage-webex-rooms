@@ -99,6 +99,10 @@ export class WebexService {
       return this.webex.people.list()
   }
 
+  async getMyOwnDetails() {
+    return this.webex.people.get('me');
+  }
+
   async listenForWebex() {
     this.webex.once(`ready`, () => {
       console.log("READY", this.webex.credentials.supertoken)
